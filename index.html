@@ -8,6 +8,51 @@
     <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- icon document https://design.google.com/icons/  -->
 
+<style>
+.auto-complete span.search-info
+{
+position: absolute; right: 10px; text-align:center;
+}
+
+.auto-complete md-search-tag
+{
+  text-align: center; font-size: 12px; margin-top:8px;
+  border: 1px dashed #CAC2C2; height: 30px; line-height: 30px;
+  padding: 0 15px; display: inline-block;
+  background-color: rgba(245,245,245,0.9);
+  border-radius: 31px; font-style: italic;
+  color: rgb(59, 89, 255); width: 74px; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.auto-complete .md-autocomplete-suggestions li{ position:relative;}
+
+.auto-complete .md-title{
+  margin-top: 3px;   font-size: 13px;
+  line-height: 20px;   padding-right:300px;
+  overflow: hidden;   text-overflow: ellipsis;
+  white-space: initial;   height: 42px;
+  vertical-align: middle;   display: table-cell;
+}
+
+.auto-complete .md-autocomplete-suggestions li
+{
+  line-height:26px;
+  border-bottom:1px rgba(230,230,230,0.9) solid;  height:50px;
+}
+.auto-complete .md-autocomplete-suggestions-container li:hover {  background-color: rgba(226, 226, 226, 0.35) !important;}
+.auto-complete .heading { display: inline-block; float: left;padding: 0px 5px;}
+
+@media (max-width:980px){
+.auto-complete .md-title{    padding-right: 320px; line-height: 21px;}
+
+}
+
+@media (max-width:500px){
+.auto-complete .md-title{    padding-right: 0px; line-height: 21px;}
+.auto-complete .search-info{ display:none;}
+.auto-complete .md-autocomplete-suggestions li { height:auto;  white-space: initial; }
+}
+</style>
    </head>
 <body>
 
@@ -15,6 +60,9 @@
     <md-content class="md-padding">
       <form ng-submit="$event.preventDefault()">
         <p>Use <code>md-autocomplete</code> to search for matches from local or remote data sources.</p>
+        <div >
+
+
         <md-autocomplete
         md-input-minlength=1
         md-autofocus=true
@@ -30,17 +78,42 @@
         md-search-text="ctrl.searchText"
         md-selected-item-change="ctrl.selectedItemChange(item)"
         md-items="item in ctrl.querySearch(ctrl.searchText)"
-        md-item-text="item.formatted_address" md-min-length="0" placeholder="What is your favorite US state?">
-          <md-item-template>
-            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.formatted_address}}</span>
+        md-item-text="item.title"
+         md-min-length="0"
+         md-menu-class="auto-complete"
+         placeholder="What is your favorite US state?">
+          <md-item-template class="auto-complete">
+            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i" class="md-title">{{item.title}}</span>
+
+            <span class="search-info">
+            <md-search-tag>
+              <md-icon><i class="material-icons">insert_chart</i></md-icon>
+              {{item.deals}}
+            </md-search-tag>
+
+          <md-search-tag> {{item.views}} </md-search-tag>
+          <md-search-tag>   {{item.story}} </md-search-tag>
+            </span>
           </md-item-template>
-          <md-not-found>
-          Trending Search : <a>Sports</a> | <a>iPhone 7</a>
+          <md-not-found >
+          <b class="heading">Trending Search :</b>
+          <md-search-tag ><a>Sports</a></md-search-tag>
+          <md-search-tag><a>Sports</a></md-search-tag>
+          <md-search-tag><a>Sports</a></md-search-tag>
+          <md-search-tag><a>Sports</a></md-search-tag>
+          <md-search-tag ><a>Sports</a></md-search-tag>
+          <md-search-tag><a>Sports</a></md-search-tag>
+          <md-search-tag><a>Sports</a></md-search-tag>
+          <md-search-tag><a>Sports</a></md-search-tag>
+          <md-search-tag ><a>Sports</a></md-search-tag>
+          <md-search-tag><a>Sports</a></md-search-tag>
+
             <!--
             No states matching "{{ctrl.searchText}}" were found.
             <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>-->
           </md-not-found>
         </md-autocomplete>
+        </div>
         <br>
         <md-checkbox ng-model="ctrl.simulateQuery">Simulate query for results?</md-checkbox>
         <md-checkbox ng-model="ctrl.noCache">Disable caching of queries?</md-checkbox>
@@ -62,6 +135,7 @@
 <!-- Angular Material Library -->
   <script src="../lib/angular-material.min.js"></script>
   <script src="app/app.js"></script>
+    <script src="app/app-local.js"></script>
 
 
   </body>
